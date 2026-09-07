@@ -7,4 +7,5 @@ import (
 type EquationParser struct {
     state State
     equation string
+    errors map[int]string
 }
