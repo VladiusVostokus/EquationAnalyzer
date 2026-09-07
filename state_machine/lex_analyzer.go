@@ -9,3 +9,7 @@ type EquationParser struct {
     equation string
     errors map[int]string
 }
+
+func (ep *EquationParser) SetState(s State) {
+    ep.state = s
+}
