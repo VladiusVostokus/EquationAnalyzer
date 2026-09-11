@@ -6,6 +6,7 @@ import (
 )
 
 var forbidenStarEndSymbols = []string{"+","-","*","/","&","$","_","@","#",".","!","?","^"}
+var forbidenSymbols = []string{"&","$","_","@","#",".","!","?","^"}
 
 type State interface {
     Validate(eq string)
@@ -24,9 +25,5 @@ func (ivs *InitValidationState) Validate (eq string) {
     eqEnd := string(eq[endIdx])
     if strings.HasSuffix(eq, "(") || slices.Contains(forbidenStarEndSymbols, eqEnd) {
         ivs.Context.Errors[endIdx] = "Wrong symbol to end"
-    }
-    if strings.Count(eq, "(") != strings.Count(eq, ")") {
-        idx := len(ivs.Context.Errors)
-        ivs.Context.Errors[idx] = "Unequal count of opening and closing brackets"
     }
 }

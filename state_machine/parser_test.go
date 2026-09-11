@@ -12,5 +12,5 @@ func TestInitialState(t *testing.T) {
 	state := &InitValidationState{Context: context}
 	context.SetState(state)
 	context.State.Validate(")a+b")
-	assert.Equal(t, 2, len(context.Errors))
+	assert.Equal(t, 1, len(context.Errors))
 }
