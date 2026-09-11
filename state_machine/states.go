@@ -6,7 +6,7 @@ import (
 )
 
 var forbidenStarEndSymbols = []string{"+","-","*","/","&","$","_","@","#",".","!","?","^"}
-var forbidenSymbols = []string{"&","$","_","@","#",".","!","?","^"}
+var forbidenSymbols = []string{"&","$","_","@","#",".","!","?","^","%"}
 
 type State interface {
     Validate(eq string)
@@ -25,5 +25,10 @@ func (ivs *InitValidationState) Validate (eq string) {
     eqEnd := string(eq[endIdx])
     if strings.HasSuffix(eq, "(") || slices.Contains(forbidenStarEndSymbols, eqEnd) {
         ivs.Context.Errors[endIdx] = "Wrong symbol to end"
+    }
+    for i, v := range eq {
+        if slices.Contains(forbidenSymbols, string(v)) {
+            ivs.Context.Errors[i] = "Forbidden symbol to use in"
+        }
     }
 }

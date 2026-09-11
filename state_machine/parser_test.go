@@ -11,6 +11,6 @@ func TestInitialState(t *testing.T) {
 	context := &EquationParser{Equation: equation, Errors: errors}
 	state := &InitValidationState{Context: context}
 	context.SetState(state)
-	context.State.Validate(")a+b")
-	assert.Equal(t, 1, len(context.Errors))
+	context.State.Validate(")a+b$&")
+	assert.Equal(t, 3, len(context.Errors))
 }
