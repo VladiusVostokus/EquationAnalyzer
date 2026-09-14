@@ -81,3 +81,12 @@ func TestComplexEquation(t *testing.T) {
 	result := l.Check(equation)
 	assert.Equal(t, 13, len(result))
 }
+
+func TestForbiddenLexemaError(t *testing.T) {
+	equation := "#"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, result[0].Type, INVALID)
+	assert.Equal(t, 1, len(l.Errors))
+	assert.Equal(t, "Forbidden lexema: " + equation, l.Errors[0])
+}

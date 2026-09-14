@@ -7,9 +7,11 @@ import (
 
 type Lexer struct {
 	tokens []Token
+	Errors map[int]string
 }
 
 func (l *Lexer) Check(eq string) []Token {
+	l.Errors = make(map[int]string)
 	curLex := ""
 	for i := 0; i < len(eq); i++ {
 		curLex += string(eq[i])
@@ -32,6 +34,12 @@ func (l *Lexer) Check(eq string) []Token {
 		if !slices.Contains(forbidenSymbols, curLex) {
 			token := Token{Type: IDENTIFIER, Value: curLex, Pos: i}
 			l.tokens = append(l.tokens, token)
+			curLex = ""
+			continue
+		} else {
+			token := Token{Type: INVALID, Value: curLex, Pos: i}
+			l.tokens = append(l.tokens, token)
+			l.Errors[i] = "Forbidden lexema: " + curLex
 			curLex = ""
 			continue
 		}

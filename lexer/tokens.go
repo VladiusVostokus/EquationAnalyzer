@@ -10,6 +10,7 @@ const (
 	CL_PAREN
 	COMMA
 	DOT
+	INVALID
 )
 
 type Token struct {
