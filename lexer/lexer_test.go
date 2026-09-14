@@ -11,4 +11,5 @@ func TestInitialState(t *testing.T) {
 	result := l.Check(equation)
 	assert.Equal(t, 4, len(result))
 	assert.Equal(t, "*", result[2].Value)
+	assert.Equal(t, OPERATOR, result[2].Type)
 }
