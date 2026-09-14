@@ -64,4 +64,5 @@ func TestEquationWithDots(t *testing.T) {
 	l := &Lexer{}
 	result := l.Check(equation)
 	assert.Equal(t, 7, len(result))
+	assert.Equal(t, result[1].Type, NUMBER)
 }
