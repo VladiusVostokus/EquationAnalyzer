@@ -18,17 +18,27 @@ func (l *Lexer) Check(eq string) []Token {
 			l.tokens = append(l.tokens, token)
 			curLex = ""
 		} else {
+
 			if unicode.IsDigit(rune(eq[i])) {
 				token := Token{Type: NUMBER, Value: curLex, Pos: i}
+
 				for j := i + 1; j < len(eq); j++ {
 					lexema := rune(eq[j])
 					if unicode.IsDigit(lexema) {
 						token.Value += string(lexema)
 						i++
 					} else {
-						break
+
+						if lexema == '.' {
+							token.Value += string(lexema)
+							i++
+						} else {
+							break
+						}
+
 					}
 				}
+
 				l.tokens = append(l.tokens, token)
 				curLex = ""
 			}

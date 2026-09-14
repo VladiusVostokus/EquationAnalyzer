@@ -51,3 +51,17 @@ func TestSimpleEquationWithParents(t *testing.T) {
 	result := l.Check(equation)
 	assert.Equal(t, 7, len(result))
 }
+
+func TestNumberWithDots(t *testing.T) {
+	equation := "12.25"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 1, len(result))
+}
+
+func TestEquationWithDots(t *testing.T) {
+	equation := "12.25+11.3"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 3, len(result))
+}
