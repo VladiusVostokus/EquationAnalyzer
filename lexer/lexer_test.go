@@ -14,6 +14,15 @@ func TestOperators(t *testing.T) {
 	assert.Equal(t, OPERATOR, result[2].Type)
 }
 
+func TestParent(t *testing.T) {
+	equation := "()"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 2, len(result))
+	assert.Equal(t, ")", result[1].Value)
+	assert.Equal(t, CL_PAREN, result[1].Type)
+}
+
 func TestNumber(t *testing.T) {
 	equation1 := "1"
 	equation2 := "123"
