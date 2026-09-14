@@ -74,3 +74,10 @@ func TestIdentifier(t *testing.T) {
 	assert.Equal(t, 1, len(result))
 	assert.Equal(t, result[0].Type, IDENTIFIER)
 }
+
+func TestComplexEquation(t *testing.T) {
+	equation := "-ab*(12.25+11.3)*4/6.7"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 13, len(result))
+}
