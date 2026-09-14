@@ -18,31 +18,36 @@ func (l *Lexer) Check(eq string) []Token {
 			l.tokens = append(l.tokens, token)
 			curLex = ""
 		} else {
-
 			if unicode.IsDigit(rune(eq[i])) {
 				token := Token{Type: NUMBER, Value: curLex, Pos: i}
-
-				for j := i + 1; j < len(eq); j++ {
-					lexema := rune(eq[j])
-					if unicode.IsDigit(lexema) {
-						token.Value += string(lexema)
-						i++
-					} else {
-
-						if lexema == '.' {
-							token.Value += string(lexema)
-							i++
-						} else {
-							break
-						}
-
-					}
-				}
-
+				val, idx := l.GetRemainingNumber(eq, i)
+				i = idx
+				token.Value += string(val)
 				l.tokens = append(l.tokens, token)
 				curLex = ""
 			}
 		}
 	}
 	return l.tokens
+}
+
+func (l *Lexer) GetRemainingNumber(eq string, start int) (string, int) {
+	i := start
+	val := ""
+	for j := i + 1; j < len(eq); j++ {
+		lexema := rune(eq[j])
+		if unicode.IsDigit(lexema) {
+			val += string(lexema)
+				i++
+			} else {
+
+			if lexema == '.' {
+				val += string(lexema)
+				i++
+			} else {
+				break
+			}
+		}
+	}
+	return val, i
 }
