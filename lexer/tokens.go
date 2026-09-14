@@ -27,3 +27,5 @@ var GetToken map[string]TokenType = map[string]TokenType {
 	"(": OP_PAREN,
 	")": CL_PAREN,
 }
+
+var forbidenSymbols = []string{"&","$","_","@","#",".","!","?","^","%"}

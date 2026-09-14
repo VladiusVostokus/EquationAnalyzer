@@ -66,3 +66,11 @@ func TestEquationWithDots(t *testing.T) {
 	assert.Equal(t, 7, len(result))
 	assert.Equal(t, result[1].Type, NUMBER)
 }
+
+func TestIdentifier(t *testing.T) {
+	equation := "a"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 1, len(result))
+	assert.Equal(t, result[0].Type, IDENTIFIER)
+}

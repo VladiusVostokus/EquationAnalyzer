@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"unicode"
+	"golang.org/x/exp/slices"
 )
 
 type Lexer struct {
@@ -17,15 +18,22 @@ func (l *Lexer) Check(eq string) []Token {
 			token := Token{Type: val, Value: curLex, Pos: i}
 			l.tokens = append(l.tokens, token)
 			curLex = ""
-		} else {
-			if unicode.IsDigit(rune(eq[i])) {
-				token := Token{Type: NUMBER, Value: curLex, Pos: i}
-				val, idx := l.GetRemainingNumber(eq, i)
-				i = idx
-				token.Value += string(val)
-				l.tokens = append(l.tokens, token)
-				curLex = ""
-			}
+			continue
+		} 
+		if unicode.IsDigit(rune(eq[i])) {
+			token := Token{Type: NUMBER, Value: curLex, Pos: i}
+			val, idx := l.GetRemainingNumber(eq, i)
+			i = idx
+			token.Value += string(val)
+			l.tokens = append(l.tokens, token)
+			curLex = ""
+			continue
+		}
+		if !slices.Contains(forbidenSymbols, curLex) {
+			token := Token{Type: IDENTIFIER, Value: curLex, Pos: i}
+			l.tokens = append(l.tokens, token)
+			curLex = ""
+			continue
 		}
 	}
 	return l.tokens
