@@ -60,8 +60,8 @@ func TestNumberWithDots(t *testing.T) {
 }
 
 func TestEquationWithDots(t *testing.T) {
-	equation := "12.25+11.3"
+	equation := "(12.25+11.3)*4"
 	l := &Lexer{}
 	result := l.Check(equation)
-	assert.Equal(t, 3, len(result))
+	assert.Equal(t, 7, len(result))
 }
