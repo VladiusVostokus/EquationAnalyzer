@@ -2,7 +2,6 @@ package lexer
 
 import (
 	"unicode"
-	"fmt"
 )
 
 type Lexer struct {
@@ -34,6 +33,5 @@ func (l *Lexer) Check(eq string) []Token {
 			}
 		}
 	}
-	fmt.Println(len(l.tokens))
 	return l.tokens
 }
