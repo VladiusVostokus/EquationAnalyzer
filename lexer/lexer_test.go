@@ -37,3 +37,17 @@ func TestNumber(t *testing.T) {
 	assert.Equal(t, "123", result2[0].Value)
 	assert.Equal(t, NUMBER, result2[0].Type)
 }
+
+func TestSimpleEquation(t *testing.T) {
+	equation := "12+8/2"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 5, len(result))
+}
+
+func TestSimpleEquationWithParents(t *testing.T) {
+	equation := "(12+8)/2"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 7, len(result))
+}

@@ -30,6 +30,7 @@ func (l *Lexer) Check(eq string) []Token {
 					}
 				}
 				l.tokens = append(l.tokens, token)
+				curLex = ""
 			}
 		}
 	}
