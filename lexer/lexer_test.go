@@ -90,3 +90,10 @@ func TestForbiddenLexemaError(t *testing.T) {
 	assert.Equal(t, 1, len(l.Errors))
 	assert.Equal(t, "Forbidden lexema: " + equation, l.Errors[0])
 }
+
+func TestFewForbiddenLexemaError(t *testing.T) {
+	equation := "#12&"
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 2, len(l.Errors))
+}
