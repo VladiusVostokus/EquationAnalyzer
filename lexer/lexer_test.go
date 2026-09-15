@@ -52,7 +52,14 @@ func TestSimpleEquationWithParents(t *testing.T) {
 	assert.Equal(t, 7, len(result))
 }
 
-func TestNumberWithDots(t *testing.T) {
+func TestNumberWithDot(t *testing.T) {
+	equation := "0.12"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 1, len(result))
+}
+
+func TestNumberWithDot2(t *testing.T) {
 	equation := "12.25"
 	l := &Lexer{}
 	result := l.Check(equation)
@@ -146,6 +153,28 @@ func TestInvalidDotNumberAndIndentifier(t *testing.T) {
 func TestInvalidDotNumber(t *testing.T) {
 	equation := "12."
 	invDotIdx := 2
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 1, len(l.Errors))
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+}
+
+func TestInvalidDotIndentifier2(t *testing.T) {
+	equation := ".a.b."
+	invDotIdx1 := 0
+	invDotIdx2 := 2
+	invDotIdx3 := 4
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 3, len(l.Errors))
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx1])
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx2])
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx3])
+}
+
+func TestInvalidDotAtNumberStart(t *testing.T) {
+	equation := ".12"
+	invDotIdx := 0
 	l := &Lexer{}
 	l.Check(equation)
 	assert.Equal(t, 1, len(l.Errors))
