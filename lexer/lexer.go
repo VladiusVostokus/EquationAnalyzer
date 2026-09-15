@@ -3,6 +3,7 @@ package lexer
 import (
 	"unicode"
 	"golang.org/x/exp/slices"
+	"strings"
 )
 
 type Lexer struct {
@@ -39,7 +40,11 @@ func (l *Lexer) Check(eq string) []Token {
 		} else {
 			token := Token{Type: INVALID, Value: curLex, Pos: i}
 			l.tokens = append(l.tokens, token)
-			l.Errors[i] = "Forbidden lexema: " + curLex
+			if curLex == "." {
+				l.Errors[i] = "Unexpected dot"
+			} else {
+				l.Errors[i] = "Forbidden lexema: " + curLex
+			}
 			curLex = ""
 			continue
 		}
@@ -51,6 +56,7 @@ func (l *Lexer) GetRemainingNumber(eq string, start int) (string, int) {
 	i := start
 	val := ""
 	hasDot := false
+	lastElemIdx := 0
 	for j := i + 1; j < len(eq); j++ {
 		lexema := rune(eq[j])
 		if unicode.IsDigit(lexema) {
@@ -69,6 +75,11 @@ func (l *Lexer) GetRemainingNumber(eq string, start int) (string, int) {
 				break
 			}
 		}
+		lastElemIdx = i
+	}
+	lastElem := string(eq[lastElemIdx])
+	if lastElem == "." || strings.Count(val, ".") == 1 {
+		l.Errors[lastElemIdx] = "Unexpected dot"
 	}
 	return val, i
 }

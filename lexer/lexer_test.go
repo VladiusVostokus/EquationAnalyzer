@@ -124,3 +124,30 @@ func TestEquationWithInvalidFractionNumber(t *testing.T) {
 	assert.Equal(t, 3, len(l.Errors))
 	assert.Equal(t, "Unexpected dot" , l.Errors[invDotIdx])
 }
+
+func TestInvalidDotIndentifier(t *testing.T) {
+	equation := "a.b"
+	invDotIdx := 1
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 1, len(l.Errors))
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+}
+
+func TestInvalidDotNumberAndIndentifier(t *testing.T) {
+	equation := "12.b"
+	invDotIdx := 2
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 1, len(l.Errors))
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+}
+
+func TestInvalidDotNumber(t *testing.T) {
+	equation := "12."
+	invDotIdx := 2
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 1, len(l.Errors))
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+}
