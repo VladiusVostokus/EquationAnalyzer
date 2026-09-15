@@ -50,6 +50,7 @@ func (l *Lexer) Check(eq string) []Token {
 func (l *Lexer) GetRemainingNumber(eq string, start int) (string, int) {
 	i := start
 	val := ""
+	hasDot := false
 	for j := i + 1; j < len(eq); j++ {
 		lexema := rune(eq[j])
 		if unicode.IsDigit(lexema) {
@@ -58,6 +59,10 @@ func (l *Lexer) GetRemainingNumber(eq string, start int) (string, int) {
 			} else {
 
 			if lexema == '.' {
+				if hasDot {
+					l.Errors[j] = "Unexpected dot"
+				}
+				hasDot = true
 				val += string(lexema)
 				i++
 			} else {

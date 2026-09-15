@@ -97,3 +97,30 @@ func TestFewForbiddenLexemaError(t *testing.T) {
 	l.Check(equation)
 	assert.Equal(t, 2, len(l.Errors))
 }
+
+func TestInvalidFractionNumber(t *testing.T) {
+	equation := "12.34.56"
+	invDotIdx := 5
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 1, len(l.Errors))
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+}
+
+func TestLongInvalidFractionNumber(t *testing.T) {
+	equation := "12.34.56.78.90"
+	invDotIdx := 8
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 3, len(l.Errors))
+	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+}
+
+func TestEquationWithInvalidFractionNumber(t *testing.T) {
+	equation := "a+b*12.34.56.78.90"
+	invDotIdx := 15
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 3, len(l.Errors))
+	assert.Equal(t, "Unexpected dot" , l.Errors[invDotIdx])
+}
