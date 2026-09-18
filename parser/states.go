@@ -4,11 +4,6 @@ import (
     l "lex_an/lexer"
 )
 
-//var forbidenStarEndSymbols = []string{"+","-","*","/","&","$","_","@","#",".","!","?","^"}
-//var forbidenSymbols = []string{"&","$","_","@","#",".","!","?","^","%"}
-//var arithmeticSymbols = []string{"+","-","*","/"}
-
-
 type State interface {
     Validate(eq []l.Token, pos int)
 }
