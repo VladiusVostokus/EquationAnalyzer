@@ -16,16 +16,20 @@ func (s *Start) Validate (eq []l.Token, curPos int) {
     firstToken := eq[curPos]
     if firstToken.Type == l.CL_PAREN {
         s.Context.Errors[curPos] = "Unexpected ) at start of equation"
+        return
     }
     if firstToken.Type == l.INVALID {
         s.Context.Errors[curPos] = "Unexpected symbol at start of equation:" + firstToken.Value
+        return
     }
     if firstToken.Type == l.OPERATOR {
         if firstToken.Value != "-"{
             s.Context.Errors[curPos] = "Unexpected operator at start of equation:" + firstToken.Value
         }
+        return
     }
     if firstToken.Type == l.OP_PAREN {
         s.Context.OpenedParCount++
+        return
     }
 }
