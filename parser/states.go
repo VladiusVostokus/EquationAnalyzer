@@ -2,6 +2,7 @@ package parser
 
 import (
     l "lex_an/lexer"
+    "golang.org/x/exp/slices"
 )
 
 type State interface {
@@ -12,24 +13,15 @@ type Start struct {
     Context *EquationParser
 }
 
+var allowedStartTokens = []l.TokenType{l.OP_PAREN, l.NUMBER, l.IDENTIFIER}
+
 func (s *Start) Validate (eq []l.Token, curPos int) {
     firstToken := eq[curPos]
-    if firstToken.Type == l.CL_PAREN {
-        s.Context.Errors[curPos] = "Unexpected ) at start of equation"
-        return
-    }
-    if firstToken.Type == l.INVALID {
+    if !slices.Contains(allowedStartTokens, firstToken.Type) && firstToken.Value != "-"{
         s.Context.Errors[curPos] = "Unexpected symbol at start of equation:" + firstToken.Value
-        return
-    }
-    if firstToken.Type == l.OPERATOR {
-        if firstToken.Value != "-"{
-            s.Context.Errors[curPos] = "Unexpected operator at start of equation:" + firstToken.Value
+    } else {
+        if firstToken.Type == l.OP_PAREN {
+            s.Context.OpenedParCount++
         }
-        return
-    }
-    if firstToken.Type == l.OP_PAREN {
-        s.Context.OpenedParCount++
-        return
     }
 }
