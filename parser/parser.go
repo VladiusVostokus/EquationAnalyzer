@@ -8,7 +8,7 @@ import (
 type EquationParser struct {
     State State
     Errors map[int]string
-    openedParCount, closedParCount int
+    OpenedParCount, ClosedParCount int
 }
 
 func (ep *EquationParser) SetState(s State) {
