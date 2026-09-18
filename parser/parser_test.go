@@ -4,7 +4,18 @@ import (
 	"testing"
 	"github.com/stretchr/testify/assert"
 	l "lex_an/lexer"
+	"reflect"
 )
+
+func TestStateTransition(t *testing.T) {
+	context := &EquationParser{}
+	state := &Start{Context: context}
+	context.SetState(state)
+	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&Start{}))
+	state2 := &Operator{Context: context}
+	context.SetState(state2)
+	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&Operator{}))
+}
 
 func TestStartState(t *testing.T) {
 	equation := ")a+b"
