@@ -18,8 +18,11 @@ type Start struct {
 }
 
 func (ivs *Start) Validate (eq []l.Token, curPos int) {
-    firstToken := eq[curPos].Type
-    if firstToken == l.CL_PAREN {
+    firstToken := eq[curPos]
+    if firstToken.Type == l.CL_PAREN {
         ivs.Context.Errors[curPos] = "Unexpected ) at start of equation"
+    }
+    if firstToken.Type == l.INVALID {
+        ivs.Context.Errors[curPos] = "Unexpected symbol at start of equation:" + firstToken.Value
     }
 }
