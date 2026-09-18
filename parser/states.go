@@ -1,35 +1,25 @@
 package parser
 
 import (
-    "strings"
-    "golang.org/x/exp/slices"
+    l "lex_an/lexer"
 )
 
-var forbidenStarEndSymbols = []string{"+","-","*","/","&","$","_","@","#",".","!","?","^"}
-var forbidenSymbols = []string{"&","$","_","@","#",".","!","?","^","%"}
-var arithmeticSymbols = []string{"+","-","*","/"}
+//var forbidenStarEndSymbols = []string{"+","-","*","/","&","$","_","@","#",".","!","?","^"}
+//var forbidenSymbols = []string{"&","$","_","@","#",".","!","?","^","%"}
+//var arithmeticSymbols = []string{"+","-","*","/"}
+
 
 type State interface {
-    Validate(eq string)
+    Validate(eq []l.Token, pos int)
 }
 
-type InitValidationState struct {
+type Start struct {
     Context *EquationParser
 }
 
-func (ivs *InitValidationState) Validate (eq string) {
-    eqStart := string(eq[0])
-    if strings.HasPrefix(eq, ")") || slices.Contains(forbidenStarEndSymbols, eqStart) {
-        ivs.Context.Errors[0] = "Wrong symbol to start"
-    }
-    endIdx := len(eq) - 1
-    eqEnd := string(eq[endIdx])
-    if strings.HasSuffix(eq, "(") || slices.Contains(forbidenStarEndSymbols, eqEnd) {
-        ivs.Context.Errors[endIdx] = "Wrong symbol to end"
-    }
-    for i, v := range eq {
-        if slices.Contains(forbidenSymbols, string(v)) {
-            ivs.Context.Errors[i] = "Forbidden symbol to use in"
-        }
+func (ivs *Start) Validate (eq []l.Token, curPos int) {
+    firstToken := eq[curPos].Type
+    if firstToken == l.CL_PAREN {
+        ivs.Context.Errors[curPos] = "Unexpected ) at start of equation"
     }
 }

@@ -3,14 +3,16 @@ package parser
 import (
 	"testing"
 	"github.com/stretchr/testify/assert"
+	l "lex_an/lexer"
 )
 
 func TestInitialState(t *testing.T) {
 	equation := ")a+b"
-	errors := make(map[int]string)
-	context := &EquationParser{Equation: equation, Errors: errors}
-	state := &InitValidationState{Context: context}
+	lexer := &l.Lexer{}
+	tokens := lexer.Check(equation)
+	context := &EquationParser{}
+	state := &Start{Context: context}
 	context.SetState(state)
-	context.Validate(")a+b$&")
-	assert.Equal(t, 3, len(context.Errors))
+	context.Validate(tokens)
+	assert.Equal(t, 1, len(context.Errors))
 }
