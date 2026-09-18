@@ -25,4 +25,9 @@ func (ivs *Start) Validate (eq []l.Token, curPos int) {
     if firstToken.Type == l.INVALID {
         ivs.Context.Errors[curPos] = "Unexpected symbol at start of equation:" + firstToken.Value
     }
+    if firstToken.Type == l.OPERATOR {
+        if firstToken.Value != "-"{
+            ivs.Context.Errors[curPos] = "Unexpected operator at start of equation:" + firstToken.Value
+        }
+    }
 }
