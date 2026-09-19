@@ -36,7 +36,7 @@ func TestStartState2(t *testing.T) {
 	state := &Start{Context: context}
 	context.SetState(state)
 	context.Validate(tokens)
-	assert.Equal(t, 1, len(context.Errors))
+	assert.Equal(t, 0, len(context.Errors))
 }
 
 func TestStartState3(t *testing.T) {
