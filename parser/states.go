@@ -6,6 +6,7 @@ import (
 )
 
 var allowedStartTokens = []l.TokenType{l.OP_PAREN, l.NUMBER, l.IDENTIFIER}
+var allowedOperatorTokens = allowedStartTokens
 
 type State interface {
     Validate(eq []l.Token, pos int)
@@ -21,12 +22,9 @@ func (s *Start) Validate (eq []l.Token, curPos int) {
         s.Context.Errors[curPos] = "Unexpected symbol at start of equation:" + firstToken.Value
         s.Context.SetState(&Invalid{s.Context})
     } else {
-        if firstToken.Type == l.OP_PAREN {
-            s.Context.OpenedParCount++
-            s.Context.SetState(&OpParenthes{s.Context})
-        }
         state, ok := Transitions[firstToken.Type]
         if ok {
+            if firstToken.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
             s.Context.SetState(state(s.Context))
         }
     }
