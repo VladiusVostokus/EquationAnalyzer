@@ -26,6 +26,7 @@ func TestStartState(t *testing.T) {
 	context.SetState(state)
 	context.Validate(tokens)
 	assert.Equal(t, 1, len(context.Errors))
+	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&Invalid{}))
 }
 
 func TestStartState2(t *testing.T) {

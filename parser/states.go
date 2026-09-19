@@ -19,6 +19,7 @@ func (s *Start) Validate (eq []l.Token, curPos int) {
     firstToken := eq[curPos]
     if !slices.Contains(allowedStartTokens, firstToken.Type) && firstToken.Value != "-"{
         s.Context.Errors[curPos] = "Unexpected symbol at start of equation:" + firstToken.Value
+        s.Context.SetState(&Invalid{s.Context})
     } else {
         if firstToken.Type == l.OP_PAREN {
             s.Context.OpenedParCount++
