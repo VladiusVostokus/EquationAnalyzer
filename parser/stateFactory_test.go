@@ -16,3 +16,25 @@ func TestStateFactory(t *testing.T) {
 	context.SetState(state2(context))
 	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&Operator{}))
 }
+
+func TestTransitToInvalidState(t *testing.T) {
+	equation := ")"
+	lexer := &l.Lexer{}
+	tokens := lexer.Check(equation)
+	context := &EquationParser{}
+	state := &Start{Context: context}
+	context.SetState(state)
+	context.Validate(tokens)
+	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&Invalid{}))
+}
+
+func TestTransitToIdentifierState(t *testing.T) {
+	equation := ")a"
+	lexer := &l.Lexer{}
+	tokens := lexer.Check(equation)
+	context := &EquationParser{}
+	state := &Start{Context: context}
+	context.SetState(state)
+	context.Validate(tokens)
+	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&Identifier{}))
+}

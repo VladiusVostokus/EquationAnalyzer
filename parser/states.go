@@ -71,5 +71,11 @@ type Invalid struct {
     Context *EquationParser
 }
 
-func (s *Invalid) Validate (eq []l.Token, curPos int) {}
+func (s *Invalid) Validate (eq []l.Token, curPos int) {
+    token := eq[curPos]
+    state, ok := Transitions[token.Type]
+    if ok {
+        s.Context.SetState(state(s.Context))
+    }
+}
 
