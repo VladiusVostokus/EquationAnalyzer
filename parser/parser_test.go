@@ -82,3 +82,14 @@ func TestCorrectEquation(t *testing.T) {
 	context.Validate(tokens)
 	assert.Equal(t, 0, len(context.Errors))
 }
+
+func TestIncorrectEquation(t *testing.T) {
+	equation := "/-(++a+b+*(&c/d)*3.4-(15asb+10)"
+	lexer := &l.Lexer{}
+	tokens := lexer.Check(equation)
+	context := &EquationParser{}
+	state := &Start{Context: context}
+	context.SetState(state)
+	context.Validate(tokens)
+	assert.Equal(t, 4, len(context.Errors))
+}
