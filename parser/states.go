@@ -23,7 +23,7 @@ type Start struct {
 func (s *Start) Validate (eq []l.Token, curPos int) {
     firstToken := eq[curPos]
     if !slices.Contains(allowedStartTokens, firstToken.Type) && firstToken.Value != "-"{
-        s.Context.Errors[firstToken.Pos] = "Unexpected symbol at start of equation:" + firstToken.Value
+        s.Context.Errors[firstToken.Pos] = "Unexpected symbol at start of equation: " + firstToken.Value
         s.Context.SetState(&Invalid{s.Context})
     } else {
         state, ok := Transitions[firstToken.Type]
@@ -42,7 +42,7 @@ type Operator struct {
 func (s *Operator) Validate (eq []l.Token, curPos int) {
     token := eq[curPos]
     if !slices.Contains(allowedOperatorTokens, token.Type) {
-        s.Context.Errors[token.Pos] = "Unexpected symbol at start of equation:" + token.Value
+        s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
         s.Context.SetState(&Invalid{s.Context})
     } else {
         state, ok := Transitions[token.Type]
@@ -62,7 +62,7 @@ type Number struct {
 func (s *Number) Validate (eq []l.Token, curPos int) {
     token := eq[curPos]
     if !slices.Contains(allowedNumberTokens, token.Type) {
-        s.Context.Errors[token.Pos] = "Unexpected symbol at start of equation:" + token.Value
+        s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
         s.Context.SetState(&Invalid{s.Context})
     } else {
         state, ok := Transitions[token.Type]
@@ -82,7 +82,7 @@ type Identifier struct {
 func (s *Identifier) Validate (eq []l.Token, curPos int) {
     token := eq[curPos]
     if !slices.Contains(allowedIdentifierTokens, token.Type) {
-        s.Context.Errors[token.Pos] = "Unexpected symbol at start of equation:" + token.Value
+        s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
         s.Context.SetState(&Invalid{s.Context})
     } else {
         state, ok := Transitions[token.Type]
@@ -102,7 +102,7 @@ type OpParenthes struct {
 func (s *OpParenthes) Validate (eq []l.Token, curPos int) {
     token := eq[curPos]
     if !slices.Contains(allowedOpParenTokens, token.Type) {
-        s.Context.Errors[token.Pos] = "Unexpected symbol at start of equation:" + token.Value
+        s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
         s.Context.SetState(&Invalid{s.Context})
     } else {
         state, ok := Transitions[token.Type]
@@ -122,7 +122,7 @@ type ClParenthes struct {
 func (s *ClParenthes) Validate (eq []l.Token, curPos int) {
     token := eq[curPos]
     if !slices.Contains(allowedClParenTokens, token.Type) {
-        s.Context.Errors[token.Pos] = "Unexpected symbol at start of equation:" + token.Value
+        s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
         s.Context.SetState(&Invalid{s.Context})
     } else {
         state, ok := Transitions[token.Type]
