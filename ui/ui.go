@@ -1,7 +1,13 @@
 package ui
 
-import "fmt"
+import (
+	"strings"
+)
 
-func main() {
-	fmt.Printf("1")
+type UI struct {
+	Input string
+}
+
+func (ui *UI) GetInput(eq string) {
+	ui.Input = strings.ReplaceAll(eq, " ","")
 }

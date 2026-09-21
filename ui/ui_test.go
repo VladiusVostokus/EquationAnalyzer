@@ -6,5 +6,8 @@ import (
 )
 
 func TestStateFactory(t *testing.T) {
-	assert.Equal(t, 1, 1)
+	ui := &UI{}
+	equation := " a +   b/3 * 5 "
+	ui.GetInput(equation)
+	assert.Equal(t,"a+b/3*5", ui.Input)
 }
