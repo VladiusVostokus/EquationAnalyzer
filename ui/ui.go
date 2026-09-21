@@ -52,3 +52,8 @@ func (ui *UI) FormOutputErrors() string {
 	}
 	return output
 }
+
+func (ui *UI) Clear() {
+	clear(ui.lexer.Errors)
+	clear(ui.parser.Errors)
+}
