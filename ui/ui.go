@@ -26,8 +26,10 @@ func (ui *UI) FormOutputErrors() string {
 	lexErrors := ui.lexer.Errors
 	syntxErrors := ui.parser.Errors
 	output := ""
-	errMarks = [len(eq)]string{}
-	for i := 0; i < len(eq) - 1; i++ {
+	eq := ui.Input
+	lens := len(eq)
+	errMarks := []string{}
+	for i := 0; i < lens - 1; i++ {
 		errMarks[i] = " "
 	}
 	errNumber := []string{}
@@ -46,9 +48,9 @@ func (ui *UI) FormOutputErrors() string {
 		}
 	}
 	output += ui.Input + "\n"
-	output += strings.Joint(errMarks,"") + "\n\n"
+	output += strings.Join(errMarks,"") + "\n\n"
 	for i, v := range(errNumber) {
-		output += string(i) + v + "\n"
+		output += string(rune(i)) + v + "\n"
 	}
 	return output
 }
