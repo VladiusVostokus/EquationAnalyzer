@@ -56,7 +56,6 @@ func (ui *UI) FormOutputErrors() string {
 			errMarks[i] = "^"
 		}
 	}
-	output += ui.Input + "\n"
 	output += strings.Join(errMarks,"") + "\n\n"
 	output += "Error positions (starting from 0):\n"
 	keys := make([]int, 0, len(errNumber))
