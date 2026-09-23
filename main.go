@@ -10,9 +10,14 @@ import (
 func main() {
 	lexer := &l.Lexer{}
 	parser := &p.EquationParser{}
-	equation := "/-(++a+b+*(&c/d)*3.4-(15asb+10)+"
 	ui := &ui.UI{Lexer: lexer, Parser: parser}
-	ui.GetInput(equation)
-	ui.MakeCheck()
-	fmt.Println(ui.FormOutputErrors())
+	for {
+		var eq string
+		fmt.Println("Enter equation: ")
+		fmt.Scanln(&eq)
+		ui.GetInput(eq)
+		ui.MakeCheck()
+		fmt.Println(ui.FormOutputErrors())
+		fmt.Println("=========================================")
+	}
 }
