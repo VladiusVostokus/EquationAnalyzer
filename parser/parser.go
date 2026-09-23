@@ -26,7 +26,10 @@ func (ep *EquationParser) Validate(tokens []l.Token) {
     if lastToken.Type == l.OPERATOR {
         ep.Errors[lastToken.Pos] = "Unexpected symbol at the end of equation: " + lastToken.Value
     }
-    if ep.OpenedParCount != ep.ClosedParCount {
-        ep.Errors[lastToken.Pos + 1] = "Equation have unclosed parenthes"
+    if ep.OpenedParCount > ep.ClosedParCount {
+        ep.Errors[lastToken.Pos + 1] = "Count of opened parenthes bigger then closed"
+    }
+    if ep.OpenedParCount < ep.ClosedParCount {
+        ep.Errors[lastToken.Pos + 1] = "Count of closed parenthes bigger then opened"
     }
 }
