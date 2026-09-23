@@ -13,6 +13,7 @@ type Lexer struct {
 
 func (l *Lexer) Check(eq string) []Token {
 	l.Errors = make(map[int]string)
+	l.tokens = nil
 	curLex := ""
 	for i := 0; i < len(eq); i++ {
 		curLex += string(eq[i])

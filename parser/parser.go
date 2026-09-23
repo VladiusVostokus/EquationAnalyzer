@@ -16,6 +16,8 @@ func (ep *EquationParser) SetState(s State) {
 
 func (ep *EquationParser) Validate(tokens []l.Token) {
     ep.Errors = make(map[int]string)
+    ep.OpenedParCount = 0
+    ep.ClosedParCount = 0
     for i, _ := range(tokens) {
         ep.State.Validate(tokens, i)
     }
