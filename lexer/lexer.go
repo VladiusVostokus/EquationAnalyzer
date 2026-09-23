@@ -62,11 +62,10 @@ func (l *Lexer) GetRemainingNumber(eq string, start int) (string, int) {
 		if unicode.IsDigit(lexema) {
 			val += string(lexema)
 				i++
-			} else {
-
+		} else {
 			if lexema == '.' {
 				if hasDot {
-					l.Errors[j] = "Unexpected dot"
+					l.Errors[j] = "Unexpected dot in fraction number"
 				}
 				hasDot = true
 				val += string(lexema)
@@ -78,7 +77,7 @@ func (l *Lexer) GetRemainingNumber(eq string, start int) (string, int) {
 		lastElemIdx = i
 	}
 	lastElem := string(eq[lastElemIdx])
-	if lastElem == "." || strings.Count(val, ".") == 1 {
+	if lastElem == "." && strings.Count(val, ".") == 1 {
 		l.Errors[lastElemIdx] = "Unexpected dot"
 	}
 	return val, i

@@ -72,6 +72,7 @@ func TestEquationWithDots(t *testing.T) {
 	result := l.Check(equation)
 	assert.Equal(t, 7, len(result))
 	assert.Equal(t, result[1].Type, NUMBER)
+	assert.Equal(t, 0, len(l.Errors))
 }
 
 func TestIdentifier(t *testing.T) {
@@ -87,6 +88,7 @@ func TestComplexEquation(t *testing.T) {
 	l := &Lexer{}
 	result := l.Check(equation)
 	assert.Equal(t, 13, len(result))
+	assert.Equal(t, 0, len(l.Errors))
 }
 
 func TestForbiddenLexemaError(t *testing.T) {
@@ -105,13 +107,21 @@ func TestFewForbiddenLexemaError(t *testing.T) {
 	assert.Equal(t, 2, len(l.Errors))
 }
 
+func TestCorrectFractionNumber(t *testing.T) {
+	equation := "12.34"
+	l := &Lexer{}
+	result := l.Check(equation)
+	assert.Equal(t, 1, len(result))
+	assert.Equal(t, 0, len(l.Errors))
+}
+
 func TestInvalidFractionNumber(t *testing.T) {
 	equation := "12.34.56"
 	invDotIdx := 5
 	l := &Lexer{}
 	l.Check(equation)
 	assert.Equal(t, 1, len(l.Errors))
-	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+	assert.Equal(t, "Unexpected dot in fraction number", l.Errors[invDotIdx])
 }
 
 func TestLongInvalidFractionNumber(t *testing.T) {
@@ -120,7 +130,7 @@ func TestLongInvalidFractionNumber(t *testing.T) {
 	l := &Lexer{}
 	l.Check(equation)
 	assert.Equal(t, 3, len(l.Errors))
-	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+	assert.Equal(t, "Unexpected dot in fraction number", l.Errors[invDotIdx])
 }
 
 func TestEquationWithInvalidFractionNumber(t *testing.T) {
@@ -129,7 +139,7 @@ func TestEquationWithInvalidFractionNumber(t *testing.T) {
 	l := &Lexer{}
 	l.Check(equation)
 	assert.Equal(t, 3, len(l.Errors))
-	assert.Equal(t, "Unexpected dot" , l.Errors[invDotIdx])
+	assert.Equal(t, "Unexpected dot in fraction number" , l.Errors[invDotIdx])
 }
 
 func TestInvalidDotIndentifier(t *testing.T) {
@@ -179,4 +189,11 @@ func TestInvalidDotAtNumberStart(t *testing.T) {
 	l.Check(equation)
 	assert.Equal(t, 1, len(l.Errors))
 	assert.Equal(t, "Unexpected dot", l.Errors[invDotIdx])
+}
+
+func TestFullEquation(t *testing.T) {
+	equation := "-ab*(12.25+11.3)*4/6.7"
+	l := &Lexer{}
+	l.Check(equation)
+	assert.Equal(t, 0, len(l.Errors))
 }
