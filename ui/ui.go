@@ -4,6 +4,8 @@ import (
 	"strings"
 	l "lex_an/lexer"
 	p "lex_an/parser"
+	"fmt"
+	"sort"
 )
 
 type UI struct {
@@ -28,6 +30,10 @@ func (ui *UI) FormOutputErrors() string {
 	output := ""
 	eq := ui.Input
 	lens := len(eq)
+	if len(Lexerrors) == 0 && len(syntxErrors) == 0 {
+		output += "Equation has no errors\n"
+		return output 
+	}
 	errMarks := make([]string, lens)
 	for i := range(errMarks) {
 		errMarks[i] = " "
@@ -51,10 +57,15 @@ func (ui *UI) FormOutputErrors() string {
 		}
 	}
 	output += ui.Input + "\n"
-	output += strings.Join(errMarks,"") + "\n"
-	output += "\n"
-	for _, v := range(errNumber) {
-		output += v + "\n"
+	output += strings.Join(errMarks,"") + "\n\n"
+	output += "Error positions (starting from 0):\n"
+	keys := make([]int, 0, len(errNumber))
+	for k := range(errNumber) {
+		keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	for i, v := range(keys) {
+		output += fmt.Sprintf("%d. Pos: %d, Desc: %s\n",i ,v, errNumber[v])
 	}
 	return output
 }
