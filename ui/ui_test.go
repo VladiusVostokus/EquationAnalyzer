@@ -17,7 +17,7 @@ func TestStateFactory(t *testing.T) {
 func TestClear(t *testing.T) {
 	lexer := &l.Lexer{Errors: map[int]string{0: "Some error"}}
 	parser := &p.EquationParser{Errors: map[int]string{0: "Some error"}}
-	ui := &UI{lexer: lexer, parser: parser}
+	ui := &UI{Lexer: lexer, Parser: parser}
 	ui.Clear()
 	assert.Equal(t, 0, len(lexer.Errors))
 	assert.Equal(t, 0, len(parser.Errors))

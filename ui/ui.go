@@ -8,8 +8,8 @@ import (
 
 type UI struct {
 	Input string
-	lexer *l.Lexer
-	parser *p.EquationParser
+	Lexer *l.Lexer
+	Parser *p.EquationParser
 }
 
 func (ui *UI) GetInput(eq string) {
@@ -17,14 +17,14 @@ func (ui *UI) GetInput(eq string) {
 }
 
 func (ui *UI) MakeCheck() {
-	tokens := ui.lexer.Check(ui.Input)
-	ui.parser.SetState(&p.Start{Context: ui.parser})
-	ui.parser.Validate(tokens)
+	tokens := ui.Lexer.Check(ui.Input)
+	ui.Parser.SetState(&p.Start{Context: ui.Parser})
+	ui.Parser.Validate(tokens)
 }
 
 func (ui *UI) FormOutputErrors() string {
-	lexErrors := ui.lexer.Errors
-	syntxErrors := ui.parser.Errors
+	Lexerrors := ui.Lexer.Errors
+	syntxErrors := ui.Parser.Errors
 	output := ""
 	eq := ui.Input
 	lens := len(eq)
@@ -33,7 +33,7 @@ func (ui *UI) FormOutputErrors() string {
 		errMarks[i] = " "
 	}
 	errNumber := []string{}
-	for i, v := range lexErrors {
+	for i, v := range Lexerrors {
 		errNumber[i] = v
 	}
 	for i, v := range syntxErrors {
@@ -56,6 +56,6 @@ func (ui *UI) FormOutputErrors() string {
 }
 
 func (ui *UI) Clear() {
-	clear(ui.lexer.Errors)
-	clear(ui.parser.Errors)
+	clear(ui.Lexer.Errors)
+	clear(ui.Parser.Errors)
 }
