@@ -28,29 +28,33 @@ func (ui *UI) FormOutputErrors() string {
 	output := ""
 	eq := ui.Input
 	lens := len(eq)
-	errMarks := []string{}
-	for i := 0; i < lens - 1; i++ {
+	errMarks := make([]string, lens)
+	for i := range(errMarks) {
 		errMarks[i] = " "
 	}
-	errNumber := []string{}
+	errNumber := make(map[int]string)
 	for i, v := range Lexerrors {
 		errNumber[i] = v
 	}
 	for i, v := range syntxErrors {
-		if errNumber[i] != " "{
-			errNumber[i] += " ," + v
+		_, ok := errNumber[i]
+		if ok {
+			errNumber[i] += "," + v
+		} else {
+			errNumber[i] = v
 		}
-		errNumber[i] = v
 	}
-	for i := 0; i < len(eq) - 1; i++ {
-		if errNumber[i] != " "{
+	for i := 0; i < lens; i++ {
+		_, ok := errNumber[i]
+		if ok {
 			errMarks[i] = "^"
 		}
 	}
 	output += ui.Input + "\n"
-	output += strings.Join(errMarks,"") + "\n\n"
-	for i, v := range(errNumber) {
-		output += string(rune(i)) + v + "\n"
+	output += strings.Join(errMarks,"") + "\n"
+	output += "\n"
+	for _, v := range(errNumber) {
+		output += v + "\n"
 	}
 	return output
 }

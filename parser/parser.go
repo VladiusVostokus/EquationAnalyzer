@@ -22,7 +22,7 @@ func (ep *EquationParser) Validate(tokens []l.Token) {
     lastIdx := len(tokens) - 1
     lastToken := tokens[lastIdx]
     if lastToken.Type == l.OPERATOR {
-        ep.Errors[lastToken.Pos] = "Unexpected symbol at the end of equation:" + lastToken.Value
+        ep.Errors[lastToken.Pos] = "Unexpected symbol at the end of equation: " + lastToken.Value
     }
     if ep.OpenedParCount != ep.ClosedParCount {
         ep.Errors[lastToken.Pos + 1] = "Equation have unclosed parenthes"
