@@ -24,12 +24,6 @@ func (s *Start) Validate (token l.Token) {
     if !slices.Contains(allowedStartTokens, token.Type) && token.Value != "-"{
         s.Context.Errors[token.Pos] = "Unexpected symbol at start of equation: " + token.Value
     } 
-    state, ok := Transitions[token.Type]
-    if ok {
-        if token.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
-        if token.Type == l.CL_PAREN { s.Context.ClosedParCount++ }
-        s.Context.SetState(state(s.Context))   
-    }
 }
 
 type Operator struct {
@@ -40,12 +34,6 @@ func (s *Operator) Validate (token l.Token) {
     if !slices.Contains(allowedOperatorTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
     } 
-    state, ok := Transitions[token.Type]
-    if ok {
-        if token.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
-        if token.Type == l.CL_PAREN { s.Context.ClosedParCount++ }
-        s.Context.SetState(state(s.Context))
-    }
 }
 
 
@@ -56,12 +44,6 @@ type Number struct {
 func (s *Number) Validate (token l.Token) {
     if !slices.Contains(allowedNumberTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
-    }
-    state, ok := Transitions[token.Type]
-    if ok {
-        if token.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
-        if token.Type == l.CL_PAREN { s.Context.ClosedParCount++ }
-        s.Context.SetState(state(s.Context))
     }
 }
 
@@ -74,12 +56,6 @@ func (s *Identifier) Validate (token l.Token) {
     if !slices.Contains(allowedIdentifierTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
     }
-    state, ok := Transitions[token.Type]
-    if ok {
-        if token.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
-        if token.Type == l.CL_PAREN { s.Context.ClosedParCount++ }
-        s.Context.SetState(state(s.Context))
-    }
 }
 
 
@@ -90,12 +66,6 @@ type OpParenthes struct {
 func (s *OpParenthes) Validate (token l.Token) {
     if !slices.Contains(allowedOpParenTokens, token.Type) && token.Value != "-"  {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
-    }
-    state, ok := Transitions[token.Type]
-    if ok {
-        if token.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
-        if token.Type == l.CL_PAREN { s.Context.ClosedParCount++ }
-        s.Context.SetState(state(s.Context))
     }
 }
 
@@ -108,12 +78,6 @@ func (s *ClParenthes) Validate (token l.Token) {
     if !slices.Contains(allowedClParenTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
     }
-    state, ok := Transitions[token.Type]
-    if ok {
-        if token.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
-        if token.Type == l.CL_PAREN { s.Context.ClosedParCount++ }
-        s.Context.SetState(state(s.Context))
-    }
 }
 
 
@@ -121,12 +85,5 @@ type Invalid struct {
     Context *EquationParser
 }
 
-func (s *Invalid) Validate (token l.Token) {
-    state, ok := Transitions[token.Type]
-    if ok {
-        if token.Type == l.OP_PAREN { s.Context.OpenedParCount++ }
-        if token.Type == l.CL_PAREN { s.Context.ClosedParCount++ }
-        s.Context.SetState(state(s.Context))
-    }
-}
+func (s *Invalid) Validate (token l.Token) {}
 

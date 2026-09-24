@@ -14,12 +14,26 @@ func (ep *EquationParser) SetState(s State) {
     ep.State = s
 }
 
+func (ep *EquationParser) CountParenthes(token l.Token) {
+    if token.Type == l.OP_PAREN { ep.OpenedParCount++ }
+    if token.Type == l.CL_PAREN { ep.ClosedParCount++ }
+}
+
+func (ep *EquationParser) ChangeState(token l.Token) {
+    state, ok := Transitions[token.Type]
+    if ok {
+        ep.SetState(state(ep))
+    }
+}
+
 func (ep *EquationParser) Validate(tokens []l.Token) {
     ep.Errors = make(map[int]string)
     ep.OpenedParCount = 0
     ep.ClosedParCount = 0
-    for _, v := range(tokens) {
-        ep.State.Validate(v)
+    for _, token := range(tokens) {
+        ep.State.Validate(token)
+        ep.CountParenthes(token)
+        ep.ChangeState(token)
     }
     lastIdx := len(tokens) - 1
     lastToken := tokens[lastIdx]
