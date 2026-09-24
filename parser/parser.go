@@ -18,8 +18,8 @@ func (ep *EquationParser) Validate(tokens []l.Token) {
     ep.Errors = make(map[int]string)
     ep.OpenedParCount = 0
     ep.ClosedParCount = 0
-    for i, _ := range(tokens) {
-        ep.State.Validate(tokens, i)
+    for _, v := range(tokens) {
+        ep.State.Validate(v)
     }
     lastIdx := len(tokens) - 1
     lastToken := tokens[lastIdx]
