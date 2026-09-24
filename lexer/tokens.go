@@ -8,8 +8,6 @@ const (
 	OPERATOR
 	OP_PAREN
 	CL_PAREN
-	COMMA
-	DOT
 	INVALID
 )
 
@@ -24,7 +22,6 @@ var GetToken map[string]TokenType = map[string]TokenType {
 	"-": OPERATOR,
 	"*": OPERATOR,
 	"/": OPERATOR,
-	",": COMMA,
 	"(": OP_PAREN,
 	")": CL_PAREN,
 }

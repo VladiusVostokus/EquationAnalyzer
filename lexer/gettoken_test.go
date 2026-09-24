@@ -12,5 +12,4 @@ func TestGetToken(t *testing.T) {
 	assert.Equal(t, OPERATOR, GetToken["/"])
 	assert.Equal(t, OP_PAREN, GetToken["("])
 	assert.Equal(t, CL_PAREN, GetToken[")"])
-	assert.Equal(t, COMMA, GetToken[","])
 }
