@@ -7,7 +7,7 @@ import (
 
 var allowedStartTokens = []l.TokenType{l.OP_PAREN, l.NUMBER, l.IDENTIFIER, l.INVALID}
 var allowedOperatorTokens = allowedStartTokens
-var allowedNumberTokens = []l.TokenType{l.IDENTIFIER, l.OPERATOR, l.CL_PAREN, l.OP_PAREN, l.INVALID}
+var allowedNumberTokens = []l.TokenType{l.IDENTIFIER, l.OPERATOR, l.CL_PAREN, l.INVALID}
 var allowedIdentifierTokens = []l.TokenType{l.IDENTIFIER, l.CL_PAREN,  l.OPERATOR, l.INVALID}
 var allowedOpParenTokens = []l.TokenType{l.IDENTIFIER, l.NUMBER, l.INVALID, l.OP_PAREN}
 var allowedClParenTokens = []l.TokenType{l.OPERATOR, l.CL_PAREN, l.INVALID}
