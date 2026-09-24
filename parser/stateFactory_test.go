@@ -25,7 +25,7 @@ func TestTransitToInvalidState(t *testing.T) {
 	state := &Start{Context: context}
 	context.SetState(state)
 	context.Validate(tokens)
-	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&Invalid{}))
+	assert.Equal(t, reflect.TypeOf(context.State), reflect.TypeOf(&ClParenthes{}))
 }
 
 func TestTransitToIdentifierState(t *testing.T) {

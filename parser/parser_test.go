@@ -25,7 +25,7 @@ func TestStartState(t *testing.T) {
 	state := &Start{Context: context}
 	context.SetState(state)
 	context.Validate(tokens)
-	assert.Equal(t, 1, len(context.Errors))
+	assert.Equal(t, 3, len(context.Errors))
 }
 
 func TestStartState2(t *testing.T) {
@@ -91,5 +91,5 @@ func TestIncorrectEquation(t *testing.T) {
 	state := &Start{Context: context}
 	context.SetState(state)
 	context.Validate(tokens)
-	assert.Equal(t, 4, len(context.Errors))
+	assert.Equal(t, 6, len(context.Errors))
 }
