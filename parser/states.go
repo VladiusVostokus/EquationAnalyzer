@@ -39,7 +39,6 @@ type Operator struct {
 func (s *Operator) Validate (token l.Token) {
     if !slices.Contains(allowedOperatorTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
-        s.Context.SetState(&Invalid{s.Context})
     } 
     state, ok := Transitions[token.Type]
     if ok {
@@ -57,7 +56,6 @@ type Number struct {
 func (s *Number) Validate (token l.Token) {
     if !slices.Contains(allowedNumberTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
-        s.Context.SetState(&Invalid{s.Context})
     }
     state, ok := Transitions[token.Type]
     if ok {
@@ -75,7 +73,6 @@ type Identifier struct {
 func (s *Identifier) Validate (token l.Token) {
     if !slices.Contains(allowedIdentifierTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
-        s.Context.SetState(&Invalid{s.Context})
     }
     state, ok := Transitions[token.Type]
     if ok {
@@ -93,7 +90,6 @@ type OpParenthes struct {
 func (s *OpParenthes) Validate (token l.Token) {
     if !slices.Contains(allowedOpParenTokens, token.Type) && token.Value != "-"  {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
-        s.Context.SetState(&Invalid{s.Context})
     }
     state, ok := Transitions[token.Type]
     if ok {
@@ -111,7 +107,6 @@ type ClParenthes struct {
 func (s *ClParenthes) Validate (token l.Token) {
     if !slices.Contains(allowedClParenTokens, token.Type) {
         s.Context.Errors[token.Pos] = "Unexpected symbol: " + token.Value
-        s.Context.SetState(&Invalid{s.Context})
     }
     state, ok := Transitions[token.Type]
     if ok {
