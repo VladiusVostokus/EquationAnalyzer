@@ -93,3 +93,25 @@ func TestIncorrectEquation(t *testing.T) {
 	context.Validate(tokens)
 	assert.Equal(t, 6, len(context.Errors))
 }
+
+func TestIncorrectParenthes(t *testing.T) {
+	equation := "()+d)*(c"
+	lexer := &l.Lexer{}
+	tokens := lexer.Check(equation)
+	context := &EquationParser{}
+	state := &Start{Context: context}
+	context.SetState(state)
+	context.Validate(tokens)
+	assert.Equal(t, 3, len(context.Errors))
+}
+
+func TestIncorrectParenthes2(t *testing.T) {
+	equation := "()+d)*(c)("
+	lexer := &l.Lexer{}
+	tokens := lexer.Check(equation)
+	context := &EquationParser{}
+	state := &Start{Context: context}
+	context.SetState(state)
+	context.Validate(tokens)
+	assert.Equal(t, 3, len(context.Errors))
+}
